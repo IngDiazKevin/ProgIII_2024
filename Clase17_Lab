@@ -1,0 +1,108 @@
+from tkinter import *
+from tkinter import messagebox
+
+def mostrar_mensaje():
+    messagebox.showinfo('Mensaje', 'Has hecho clic en el botón')
+
+def cambiar_color():
+    ventana.config(bg='#3CB371')  # Cambiar color de fondo de la ventana
+
+def imprimir_seleccion():
+    seleccion = opcion.get()
+    if seleccion == 1:
+        label_seleccion.config(text="Seleccionaste la opción A", fg="blue")
+    elif seleccion == 2:
+        label_seleccion.config(text="Seleccionaste la opción B", fg="green")
+    elif seleccion == 3:
+        label_seleccion.config(text="Seleccionaste la opción C", fg="red")
+
+def mostrar_info_checkbox():
+    info = ""
+    if valor1.get():
+        info += "Checkbox 1 seleccionado\n"
+    if valor2.get():
+        info += "Checkbox 2 seleccionado\n"
+    label_checkbox.config(text=info, fg="purple")
+
+def mostrar_texto():
+    texto_visible = entry_texto.get()
+    label_texto.config(text=texto_visible)
+
+def ocultar_texto():
+    texto_oculto = "*" * len(entry_texto.get())
+    label_texto.config(text=texto_oculto)
+
+def salir():
+    ventana.quit()
+
+ventana = Tk()
+ventana.geometry('800x600')
+ventana.title('Interfaz Gráfica - Diaz Kevin')
+
+# Menú
+menubar = Menu(ventana)
+archivo_menu = Menu(menubar, tearoff=0)
+archivo_menu.add_command(label="Abrir")
+archivo_menu.add_command(label="Guardar")
+archivo_menu.add_separator()
+archivo_menu.add_command(label="Salir", command=salir)
+menubar.add_cascade(label="Archivo", menu=archivo_menu)
+
+editar_menu = Menu(menubar, tearoff=0)
+editar_menu.add_command(label="Copiar")
+editar_menu.add_command(label="Cortar")
+editar_menu.add_command(label="Pegar")
+menubar.add_cascade(label="Editar", menu=editar_menu)
+
+ventana.config(menu=menubar)
+
+# Botón
+btn_mensaje = Button(ventana, text='Mostrar Mensaje', command=mostrar_mensaje, bg="orange", fg="white", height=3, width=20, font=("Arial", 12))
+btn_mensaje.grid(row=0, column=1, pady=10, padx=10)
+
+# RadioButtons
+opcion = IntVar()
+radio_btn1 = Radiobutton(ventana, text='Opción A', variable=opcion, value=1, command=imprimir_seleccion, fg="blue", height=3, width=20, font=("Arial", 12))
+radio_btn1.grid(row=1, column=0, pady=10, padx=10)
+radio_btn2 = Radiobutton(ventana, text='Opción B', variable=opcion, value=2, command=imprimir_seleccion, fg="green", height=3, width=20, font=("Arial", 12))
+radio_btn2.grid(row=1, column=1, pady=10, padx=10)
+radio_btn3 = Radiobutton(ventana, text='Opción C', variable=opcion, value=3, command=imprimir_seleccion, fg="red", height=3, width=20, font=("Arial", 12))
+radio_btn3.grid(row=1, column=2, pady=10, padx=10)
+
+# Etiqueta para mostrar selección
+label_seleccion = Label(ventana, text='Aún no has seleccionado ninguna opción', fg="black", height=3, font=("Arial", 14))
+label_seleccion.grid(row=2, column=0, columnspan=3, pady=10, padx=10)
+
+# CheckButtons
+valor1 = BooleanVar()
+check_btn1 = Checkbutton(ventana, text='Checkbox 1', variable=valor1, command=mostrar_info_checkbox, fg="purple", height=3, width=20, font=("Arial", 12))
+check_btn1.grid(row=3, column=0, pady=10, padx=10)
+valor2 = BooleanVar()
+check_btn2 = Checkbutton(ventana, text='Checkbox 2', variable=valor2, command=mostrar_info_checkbox, fg="purple", height=3, width=20, font=("Arial", 12))
+check_btn2.grid(row=3, column=1, pady=10, padx=10)
+
+# Etiqueta para mostrar información de los CheckButtons
+label_checkbox = Label(ventana, text='', fg="purple", height=3, font=("Arial", 14))
+label_checkbox.grid(row=3, column=2, pady=10, padx=10)
+
+# Entrada de texto
+entry_texto = Entry(ventana, show="*", width=50, font=("Arial", 12))
+entry_texto.grid(row = 4, column=0, columnspan=2, pady=10, padx=10)
+
+# Botón para mostrar texto oculto
+btn_mostrar = Button(ventana, text="Mostrar Texto", command=mostrar_texto, bg="green", fg="white", height=3, width=20, font=("Arial", 12))
+btn_mostrar.grid(row=5, column=0, pady=5, padx=10)
+
+# Label para mostrar texto revelado
+label_texto = Label(ventana, text='', fg="blue", height=3, font=("Arial", 14))
+label_texto.grid(row=6, column=0, columnspan=2, pady=10, padx=10)
+
+# Botón para ocultar texto
+btn_ocultar = Button(ventana, text="Ocultar Texto", command=ocultar_texto, bg="red", fg="white", height=3, width=20, font=("Arial", 12))
+btn_ocultar.grid(row=5, column=1, pady=5, padx=10)
+
+# Cambiar color de fondo de la ventana
+btn_color = Button(ventana, text='Cambiar Color', command=cambiar_color, bg="gray", fg="white", height=3, width=20, font=("Arial", 12))
+btn_color.grid(row=5, column=2, pady=10, padx=10)
+
+ventana.mainloop()
